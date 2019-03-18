@@ -32,3 +32,4 @@ Using https://interview-tech-testing.herokuapp.com/product-details/ as the base 
 
 ### How to submit
 To submit, fork this repository to your own github account and create a pull request using `msventurelabs/tuesday-take-home` as the base repository
+If you don't complete all the tasks please include a readme describing the steps you would need to take to finish.
