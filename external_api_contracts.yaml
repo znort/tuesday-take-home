@@ -1,0 +1,208 @@
+swagger: "2.0"
+info:
+  description: "Provides product related data."
+  version: "1.0.0"
+  title: "Product and stock Service"
+  termsOfService: "http://swagger.io/terms/"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+basePath: "/"
+tags:
+  - name: "Product"
+    description: "Product Data"
+  - name: "Price"
+    description: "Price Data"
+  - name: "Reduction"
+    description: "Reductions Data"
+schemes:
+  - "http"
+paths:
+  /products/{product_id}:
+    get:
+      tags:
+        - "Product"
+      summary: "Get product data for a given product ID."
+      description: ""
+      operationId: "getProduct"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "product_id"
+          description: "The ID of the product to retrieve."
+          required: true
+          type: string
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: '#/definitions/Product'
+        404:
+          description: "No Product Found"
+
+  /prices/{sku_id}:
+    get:
+      tags:
+        - "Price"
+      summary: "Get a product's price data for a given SKU ID."
+      description: ""
+      operationId: "getPrice"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "sku_id"
+          description: "The SKU ID of the product to retrieve."
+          required: true
+          type: string
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: '#/definitions/Price'
+        404:
+          description: "No Price Found"
+
+  /reductions/{sku_id}:
+    get:
+      tags:
+        - "Reduction"
+      summary: "Get a product's reductions data for a given SKU ID."
+      description: ""
+      operationId: "getReductions"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "sku_id"
+          description: "The SKU ID of the product to retrieve."
+          required: true
+          type: string
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/Reduction'
+        404:
+          description: "No Reductions Found"
+
+definitions:
+  Product:
+    type: "object"
+    required:
+      - "id"
+      - "title"
+      - "description"
+      - "colours"
+    properties:
+      id:
+        type: "string"
+        example: "p22245233"
+      title:
+        type: "string"
+        example: Luxury Egyptian Cotton Towel
+      description:
+        type: "string"
+        example: "Give yourself an indulgent spa experience right at home with our super plush Egyptian cotton towels. Made with longer lasting mature cotton fibres and infused with our StayNEW™ technology, they’ll retain a fresh feeling even after multiple washes. These 100% pure cotton towels are available in a full rainbow of colours to match your home interiors with elegant softness. With a 650gsm rating, they’re thick, fluffy and fully absorbent for an unbeatable feeling of touchable luxury."
+      colours:
+        type: "array"
+        items:
+          $ref: '#/definitions/Colour'
+  Colour:
+    type: "object"
+    required:
+      - "colour_id"
+      - "colour"
+      - "hex_code"
+      - "image_url"
+      - "sizes"
+    properties:
+      colour_id:
+        type: "string"
+        example: 1
+      colour:
+        type: "string"
+        example: "Grey"
+      colour:
+        type: "string"
+        example: "#3366AB"
+      image_url:
+        type: "string"
+        example: "https://asset1.cxnmarksandspencer.com/is/image/mands/PL_05_T36_1918E_KU_X_EC_0?$PRD_CARO_VER$"
+      sizes:
+        type: "array"
+        items:
+          $ref: '#/definitions/Size'
+  Size:
+    type: "object"
+    required:
+      - "sku_id"
+      - "size"
+    properties:
+      sku_id:
+        type: "string"
+        example: "05566600"
+      size:
+        type: "string"
+        example: "Face Towel"
+  Price:
+    type: "object"
+    required:
+      - "currency_code"
+      - "amount"
+    properties:
+      currency_code:
+        type: "string"
+        example: "GBP"
+      amount:
+        type: number
+        example: 8.00
+  Reduction:
+    type: "object"
+    required:
+      - "valid_from"
+      - "valid_to"
+      - "condition_type"
+      - "currency_code"
+      - "discount"
+    properties:
+      valid_from:
+        type: "string"
+        format: "date-time"
+      valid_to:
+        type: "string"
+        format: "date-time"
+      condition_type:
+        type: "string"
+        enum: ["ONLINE", "INSTORE"]
+      currency_code:
+        type: "string"
+        example: "GBP"
+      discount:
+        $ref: '#/definitions/Deduction'
+  Deduction:
+    type: "object"
+    required:
+      - "discount_type"
+      - "discount_value"
+    properties:
+      discount_type:
+        type: "string"
+        enum: ["PERCENTAGE", "AMOUNT", "QUALIFIED"]
+      discount_value:
+        type: "string"
+        example: "10"
+
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

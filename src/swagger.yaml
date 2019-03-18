@@ -1,0 +1,22 @@
+swagger: '2.0'
+info:
+  description: 'Product details Service'
+  version: 1.0.0
+  title: 'Product details Service'
+schemes:
+  - http
+basePath: /
+paths:
+  /:
+    get:
+      tags:
+        - 'Say hello'
+      summary: 'Hello, world'
+      description: 'End-point to test whether the service is running.
+      Returns "Hello, world" if the service is running correctly'
+      parameters: []
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: '"Hello, world"'
